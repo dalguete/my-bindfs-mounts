@@ -1,0 +1,7 @@
+# In this file you have to include as many lines to start a fuse.bindfs as you want
+# This are passed as is to the command 'bindfs', so be careful with what you put
+#
+# NOTE: Origin and Destination places must exist, You have to create them, the process
+# 	won't do that
+
+
