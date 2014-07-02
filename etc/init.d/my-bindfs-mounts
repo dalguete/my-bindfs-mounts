@@ -14,7 +14,7 @@
 # Do NOT "set -e"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
-PATH=/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin
 DESC="Create custom bindings"
 NAME=my-bindfs-mounts
 BINDFS=/usr/bin/bindfs
@@ -22,19 +22,6 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
 [ -x "$BINDFS" ] || exit 0
-
-# Read configuration variable file if it is present
-DATA=''
-if [ -r /etc/default/$NAME ]; then
-  while read line    
-  do  
-    my_line=`echo $line | grep -e ^# -v`
-
-    if [ -n "$my_line" ]; then
-	DATA="${DATA}${my_line}\n"
-    fi
-  done </etc/default/$NAME
-fi
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
@@ -52,43 +39,29 @@ do_start()
 	#   0 if daemon has been started
 	#   1 if daemon was already running
 	#   2 if daemon could not be started
-	mounts=`mount -t fuse.bindfs | wc -l`
+
+	# Count mounts
+	mounts=`$NAME -l | wc -l`
 
 	if [ "$mounts" != "0" ]; then
 	  echo "$DESC" was already executed.
-	  return 2
+
+	  return 1
 	fi
 
-	exists=0
-	$( echo $DATA > /tmp/my-bindfs-mounts )
+  # Mount all from config file
+	local ERRORS="$($NAME --load-from-file /etc/default/$NAME 2>&1)"
 
-	while read line    
-	do  
-	  if [ -n "$line" ]; then
-  	    exists=1
+  if [ -n "$ERRORS" ]; then
+		echo "$DESC could not be started (maybe incomplete activations)..."
+		echo $ERRORS
 
-	    eval "$BINDFS $line 2> /tmp/my-bindfs-mounts-error"
-	  fi
-	done </tmp/my-bindfs-mounts
+		return 2
+  fi
 
-	rm /tmp/my-bindfs-mounts
+	# Message
+	echo "$DESC" started.
 
-	if [ "$exists" = "0" ]; then
-   	  echo "$DESC" could not be started. Config file must contain data.
-	  return 2
-	fi
-
-	if [ -f /tmp/my-bindfs-mounts-error ]; then
-	  nLines=`cat /tmp/my-bindfs-mounts-error | wc -l | awk '{print $1'}`
-
-	  if [ "$nLines" != "0" ]; then
-     	    echo "$DESC could not be started (maybe incomplete activations)." `cat /tmp/my-bindfs-mounts-error`
-  	    rm /tmp/my-bindfs-mounts-error
-	    return 2
-	  fi
- 	fi
-
-	echo "$DESC" started or resumed.
 	return 0
 }
 
@@ -102,15 +75,22 @@ do_stop()
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
-	mounts=`mount -t fuse.bindfs | wc -l`
+
+	# Count mounts
+	mounts=`$NAME -l | wc -l`
 
 	if [ "$mounts" = "0" ]; then
 	  echo "$DESC" is already stopped.
+
 	  return 1
 	fi
 
-	umount -t fuse.bindfs -a >/dev/null
+	# Umount all
+	$NAME --umount-all	
+
+	# Message
 	echo "$DESC" stopped.
+
 	return 0	
 }
 
@@ -119,11 +99,11 @@ do_stop()
 #
 do_status()
 {
-	mount -t fuse.bindfs > /tmp/my-bindfs-mounts-status
-	cat /tmp/my-bindfs-mounts-status
- 	mounts=$( grep -o "bindfs on" /tmp/my-bindfs-mounts-status | wc -l )
-	rm /tmp/my-bindfs-mounts-status
-	echo "..." $mounts "mount(s) ..."
+	# Count mounts
+ 	mounts=$( $NAME -l | wc -l )
+
+	# Message
+	echo "..." $mounts "bindfs mount(s) ..."
 }
 
 case "$1" in

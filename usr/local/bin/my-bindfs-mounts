@@ -8,6 +8,9 @@ OPTIONS=
 MAIN_FUNCTION=
 MAIN_CONFIG_FUNCTION=
 
+# File to load
+LOAD_FROM_FILE=
+
 # Secondary var
 ERROR_ON_MOUNT=
 
@@ -19,6 +22,8 @@ print_usage()
 {
 	echo >&2 \
 	" usage: $0 [-l]\n" \
+	"usage: $0 [--load-from-file [FILENAME]]\n" \
+	"usage: $0 [--umount-all]\n" \
 	"usage: $0 [-m [-i|-r] [-o OPTIONS] SOURCE DESTINATION]\n" \
 	"usage: $0 [-u [-r] DIR1 [DIR2 ...]]\n" \
 	"usage: $0 [-i [-o OPTIONS] SOURCE DESTINATION]\n" \
@@ -47,6 +52,14 @@ check_conflicts(){
 		print_usage
 	fi
 
+	if [ "$MAIN_FUNCTION" = "loadFromFile" ] && [ "$MAIN_CONFIG_FUNCTION" != "" ]; then
+		print_usage
+	fi
+
+	if [ "$MAIN_FUNCTION" = "umountAll" ] && [ "$MAIN_CONFIG_FUNCTION" != "" ]; then
+		print_usage
+	fi
+
 	if [ "$MAIN_FUNCTION" = "umounting" ] && [ "$MAIN_CONFIG_FUNCTION" = "inserting" ]; then
 		print_usage
 	fi
@@ -54,7 +67,8 @@ check_conflicts(){
 
 # Parse all the arguments passed to the program
 # TEMP needed as the `eval set --' would nuke the return value of getopt.
-TEMP=`getopt -o lmuo:ir -q -- "$@"`
+TEMP=`getopt -o lmuo:ir -l load-from-file::,umount-all -q -- "$@"`
+
 if [ $? != 0 ] ; then 
 	print_usage
 fi
@@ -70,42 +84,61 @@ fi
 # Process all input data
 while [ $# -gt 0 ]
 do
-    case "$1" in
-	-l)	# List all mounts
-		is_main_function_set
-		MAIN_FUNCTION="listing";;
+	case "$1" in
+		-l)	# List all mounts
+			is_main_function_set
+			MAIN_FUNCTION="listing";;
 
-	-m)  	# Perform a mount
-		is_main_function_set
-		MAIN_FUNCTION="mounting";;
+		--load-from-file)	# Mount all stuff defined in a file (config file by default)
+			is_main_function_set
 
-	-o)  	# Set the options for the mount
-		OPTIONS="$2"
-		shift;;
+			# Set the file to be loaded
+		  LOAD_FROM_FILE=$CONFIG_FILE
+			if [ -f "$4" -a -r "$4" -a -s "$4" ]
+			then
+				LOAD_FROM_FILE="$4"
+			fi
 
-	-u)  	# Perform an umount
-		is_main_function_set
-		MAIN_FUNCTION="umounting";;
+			# Consume the argument
+		  shift
 
-	-i)  	# Insert/Update the mounted item entry in the config file 
-		is_main_config_function_set
-		MAIN_CONFIG_FUNCTION="upserting";;
+			MAIN_FUNCTION="loadFromFile";;
 
-	-r)  	# Remove the mounted item entry in the config file 
-		is_main_config_function_set
-		MAIN_CONFIG_FUNCTION="removing";;
+		--umount-all)	# Umount any bindfs mounts in place
+			is_main_function_set
+			MAIN_FUNCTION="umountAll";;
 
-	--)	shift 
-		break;;
+		-m)  	# Perform a mount
+			is_main_function_set
+			MAIN_FUNCTION="mounting";;
 
-	-*)	# Unknown flag
-		print_usage;;
+		-o)  	# Set the options for the mount
+			OPTIONS="$2"
+			shift;;
 
-	*)	# Terminate while loop
-		break;;
-    esac
+		-u)  	# Perform an umount
+			is_main_function_set
+			MAIN_FUNCTION="umounting";;
 
-    shift
+		-i)  	# Insert/Update the mounted item entry in the config file 
+			is_main_config_function_set
+			MAIN_CONFIG_FUNCTION="upserting";;
+
+		-r)  	# Remove the mounted item entry in the config file 
+			is_main_config_function_set
+			MAIN_CONFIG_FUNCTION="removing";;
+
+		--)	shift 
+			break;;
+
+		-*)	# Unknown flag
+			print_usage;;
+
+		*)	# Terminate while loop
+			break;;
+  esac
+
+  shift
 done
 
 # Ensure there are no conflicts in the logic of parameters passed
@@ -121,6 +154,40 @@ listing()
 
 	# List the mounts
 	mount -t fuse.bindfs | grep -e '\/.*' -o | sed 's/type\sfuse\.bindfs.*$//g'
+}
+
+# Function used to load all mounts as defined in a file (config file by default)
+loadFromFile()
+{
+	# Mount entries from file
+	while read line
+	do  
+	  my_line=`echo $line | grep -e ^# -v`
+
+	  if [ -n "$my_line" ]; then
+			eval "/usr/bin/bindfs $my_line >> /tmp/my-bindfs-mounts-error 2>&1"
+	  fi
+	done < $LOAD_FROM_FILE
+	
+	# Check for errors
+	if [ -f /tmp/my-bindfs-mounts-error ]; then
+		# Error message
+		cat /tmp/my-bindfs-mounts-error 1>&2
+
+		# Remove error log file
+		rm /tmp/my-bindfs-mounts-error
+	
+		exit 1
+	fi
+
+  # Remove error log file
+  rm /tmp/my-bindfs-mounts-error
+}
+
+# Function used umount all bindfs mounts
+umountAll()
+{
+	umount -t fuse.bindfs -a > /dev/null
 }
 
 # Function used to create a mount

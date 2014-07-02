@@ -14,7 +14,7 @@ will all possible options.
 To use it, copy the file into the defined place, and do:
 ```
 chown root.root /usr/local/bin/my-bindfs-mounts
-chmod +x /usr/local/bin/my-bindfs-mounts
+chmod 755 /usr/local/bin/my-bindfs-mounts
 ```
 
 * `/etc/default/my-bindfs-mounts`: Persistence file with all mounts to handle. Each
@@ -38,7 +38,7 @@ update-rc.d my-bindfs-mounts defaults
 ```
 
 The last command creates a service that will bring all bindfs mounts back to life
-every time it's started.
+every time machine starts.
 
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths.
 You will have to ensure both of them exists previously.
