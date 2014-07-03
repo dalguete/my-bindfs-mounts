@@ -169,8 +169,8 @@ loadFromFile()
 	  fi
 	done < $LOAD_FROM_FILE
 	
-	# Check for errors
-	if [ -f /tmp/my-bindfs-mounts-error ]; then
+	# Check the error file exists and has something to say
+	if [ -f /tmp/my-bindfs-mounts-error -a -s /tmp/my-bindfs-mounts-error ]; then
 		# Error message
 		cat /tmp/my-bindfs-mounts-error 1>&2
 
