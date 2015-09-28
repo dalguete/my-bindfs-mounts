@@ -179,9 +179,6 @@ loadFromFile()
 	
 		exit 1
 	fi
-
-  # Remove error log file
-  rm /tmp/my-bindfs-mounts-error
 }
 
 # Function used umount all bindfs mounts
