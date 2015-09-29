@@ -44,7 +44,8 @@ was created in an incomplete fashion.
 Now, this is **important**, to include any file added, it is necessary to perform a `bzr add`.
 That's not mentioned in docs, but without that, files like **install**, **postinst** and
 **prerm** weren't included.
-**Important** to mention to, it's better to perform all the build process inside a
+
+**Important** to mention too, it's better to perform all the build process inside a
 sub folder, as the whole thing creates packages and folders in a place next to where
 the main code is located, not good, at all.
 
