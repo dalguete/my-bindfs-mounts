@@ -40,6 +40,9 @@ Changing folders commands are not reliable as explained there. Some commands mus
 run at different folder levels.
 And finally, what did the trick was to add **install** file. Without it package
 was created in an incomplete fashion.
+Now, this is important, to include any file added, it is necessary to perform a `bzr add`.
+That's not mentioned in docs, but without that, files like **install**, **postinst** and
+**prerm** weren't included.
 
 - If you, as me, are not a bzr user, just add a .gitignore file to not track info
 generated in *.bzr* folder. You'll still see *.git* folder inside PPA's code link,
