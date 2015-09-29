@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+update-rc.d my-bindfs-mounts defaults
+service my-bindfs-mounts start

@@ -1,0 +1,3 @@
+usr/bin/my-bindfs-mounts
+etc/default/my-bindfs-mounts
+etc/init.d/my-bindfs-mounts

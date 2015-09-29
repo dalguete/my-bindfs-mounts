@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+service my-bindfs-mounts stop
+update-rc.d my-bindfs-mounts remove
