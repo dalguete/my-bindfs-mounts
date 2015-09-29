@@ -21,10 +21,15 @@ on system startup, based on whatever has been set in the persistence file.
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths.
 You will have to ensure both of them exists previously.
 
+Ubuntu PPA
+==========
+
+You can find the package as a PPA here `https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts`
+
 Sidenote
 --------
 
-As a noob in the *deb* packagin process, it was a bit painful to get the whole stuff
+As a noob in the *deb* packaging process, it was a bit painful to get the whole stuff
 in place. After much reading and headaches, I finally made it. Here my conclusions:
 
 - Ubuntu documentation on how to make things work (http://packaging.ubuntu.com/html/packaging-new-software.html)
