@@ -24,30 +24,26 @@ You will have to ensure both of them exists previously.
 Sidenote
 --------
 
-I'm setting some info on how to create **deb** packages here, just to not forget
-about it the next time.
-Sadly I had to deal with a lot of suffering understanding the whole process as I
-was a complete noob on the field.
+As a noob in the *deb* packagin process, it was a bit painful to get the whole stuff
+in place. After much reading and headaches, I finally made it. Here my conclusions:
 
-So here resides some good resources on what to do next time I need to build a deb
-package again.
+- Ubuntu documentation on how to make things work (http://packaging.ubuntu.com/html/packaging-new-software.html)
+is good, but it doesn't cover all aspects, as installation scripts or pre/post
+scripts. It just give some general approaches or links as last resource, that turned
+out to be critical in my experience.
+Changing folders commands are not reliable as explained there. Some commands must be
+run at different folder levels.
+And finally, what did the trick was to add **install** file. Without it package
+was created in an incomplete fashion.
 
-- As I wanted to publish this under PPA, it's important to set all gpg keys stuff
-in place in first place. For that, follow this steps http://packaging.ubuntu.com/html/getting-set-up.html
-There a lot of things I didn't use in the end, as bzr or pbuilder, but it's THE
-starting point.
-- Following the general Ubuntu guide is good (http://packaging.ubuntu.com/html/packaging-new-software.html),
-but it'd be better is a more general example would be used. In my case, I had to
-deal with deb packages for scripts only, and that required a lot of reading in other
-places. Also I didn't use the bzr stuff, maybe a mistake, but I found it not useful
-for my intentions.
-- To install my scripts, I had to deal with the use of files not mentioned in Ubuntu
-guide, like *copyright*, *install*, *postinst* and *prerm*. The last three ones particularly
-important as there resides logic for installation files location and processes for
-installing and uninstalling software.
-- I realized there's no need to remove *.git* folder while packing as the system
-gets rid of removing it.
-- I got some ideas from this other place too, just to build a more complete understading
+- If you, as me, are not a bzr user, just add a .gitignore file to not track info
+generated in *.bzr* folder. You'll still see *.git* folder inside PPA's code link,
+but that's fine and desirable.
+
+- There's no need to remove *.git* folder while packing, as the system gets rid
+of removing it.
+
+- I got some ideas from this other places too, just to build a more complete understading
 of things:
 		- http://askubuntu.com/questions/71199/manually-created-deb-how-do-i-upload-to-a-ppa
 		- https://developer.ubuntu.com/en/publish/other-forms-of-submitting-apps/ppa/
