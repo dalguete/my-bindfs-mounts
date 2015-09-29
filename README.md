@@ -24,7 +24,7 @@ You will have to ensure both of them exists previously.
 Ubuntu PPA
 ==========
 
-You can find the package as a PPA here `https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts`
+You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
 
 Sidenote
 --------
