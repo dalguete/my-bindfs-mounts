@@ -1,0 +1,19 @@
+name: my-bindfs-mount
+version: '0.1'
+summary: bindfs mounts helper, with persistence layer
+description: |
+  Here resides a kind of framework that let us instantiate mounts in the way `bindfs`
+  command does, plus a persistence section, so a list of mounts can be stored in a
+  support file.
+
+grade: stable
+confinement: strict
+
+apps:
+  my-bindfs-mount:
+    command: my-bindfs-mount
+
+parts:
+  my-bindfs-mount:
+    plugin: dump
+    source: .
