@@ -15,7 +15,7 @@ LOAD_FROM_FILE=
 ERROR_ON_MOUNT=
 
 # Config file location
-CONFIG_FILE=/etc/default/my-bindfs-mounts
+CONFIG_FILE=/etc/default/bindfs-mounts
 
 # Function used to print the usage message
 print_usage()
@@ -165,17 +165,17 @@ loadFromFile()
 	  my_line=`echo $line | grep -e ^# -v`
 
 	  if [ -n "$my_line" ]; then
-			eval "/usr/bin/bindfs $my_line >> /tmp/my-bindfs-mounts-error 2>&1"
+			eval "/usr/bin/bindfs $my_line >> /tmp/bindfs-mounts-error 2>&1"
 	  fi
 	done < $LOAD_FROM_FILE
 	
 	# Check the error file exists and has something to say
-	if [ -f /tmp/my-bindfs-mounts-error -a -s /tmp/my-bindfs-mounts-error ]; then
+	if [ -f /tmp/bindfs-mounts-error -a -s /tmp/bindfs-mounts-error ]; then
 		# Error message
-		cat /tmp/my-bindfs-mounts-error 1>&2
+		cat /tmp/bindfs-mounts-error 1>&2
 
 		# Remove error log file
-		rm /tmp/my-bindfs-mounts-error
+		rm /tmp/bindfs-mounts-error
 	
 		exit 1
 	fi

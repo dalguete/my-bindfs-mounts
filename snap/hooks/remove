@@ -3,5 +3,5 @@
 ###############################
 ## Remove Configuration File ##
 ###############################
-CONFIG_FILE="/etc/default/my-bindfs-mounts"
+CONFIG_FILE="/etc/default/bindfs-mounts"
 rm -f "$CONFIG_FILE"
