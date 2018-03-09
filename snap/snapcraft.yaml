@@ -6,7 +6,9 @@ description: |
   command does, plus a persistence section, so a list of mounts can be stored in a
   support file.
 
-grade: stable
+# As this package is a utility for custom processes handled internally, there's still no
+# need to make it available under the stable channel, yet!
+grade: devel
 # Classic confinement was used to allow internal commands to run mounts on host system.
 # Originally a couple of interfaces were tested, with no positive results.
 confinement: classic
