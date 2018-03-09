@@ -1,6 +1,6 @@
 # my-bindfs-mounts
 
-### TL;DR;
+### TL;DR
 
 bindfs mounts helper, with persistence layer
 
