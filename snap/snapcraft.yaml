@@ -1,4 +1,4 @@
-name: bindfs-mounts
+name: my-bindfs-mounts
 version: '0.1'
 summary: bindfs mounts helper, with persistence layer
 description: |
@@ -14,13 +14,13 @@ grade: devel
 confinement: classic
 
 apps:
-  bindfs-mounts:
-    command: usr/bin/bindfs-mounts
+  my-bindfs-mounts:
+    command: usr/bin/my-bindfs-mounts
     # plugs:
     #   - fuse-support
     #   - mount-observe
 
 parts:
-  bindfs-mounts:
+  my-bindfs-mounts:
     plugin: dump
     source: .

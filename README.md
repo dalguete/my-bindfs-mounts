@@ -1,4 +1,4 @@
-# bindfs-mounts
+# my-bindfs-mounts
 
 bindfs mounts helper, with persistence layer
 
@@ -10,11 +10,11 @@ support file.
 
 Next an explanation of each file here defined:
 
-* `/usr/bin/bindfs-mounts`: Command aimed to feed persistence file with
-mounts defined, along with options. By typing `bindfs-mounts` you'll get a list
+* `/usr/bin/my-bindfs-mounts`: Command aimed to feed persistence file with
+mounts defined, along with options. By typing `my-bindfs-mounts` you'll get a list
 will all possible options.
 
-* `/etc/default/bindfs-mounts`: Persistence file with all mounts to handle. Each
+* `/etc/default/my-bindfs-mounts`: Persistence file with all mounts to handle. Each
 line represents a bunch of args to pass to `bindfs` command, so you can manually
 change things here; just, be careful to not insert invalid options.
 

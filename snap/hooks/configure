@@ -3,7 +3,7 @@
 ############################
 ## Add Configuration File ##
 ############################
-CONFIG_FILE="/etc/default/bindfs-mounts"
+CONFIG_FILE="/etc/default/my-bindfs-mounts"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Config file installed!"
