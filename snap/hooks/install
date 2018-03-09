@@ -1,0 +1,39 @@
+#!/bin/sh
+
+################################
+## 'bindfs' package checkings ##
+################################
+
+# Check bindfs package is installed in host.
+echo "Checking 'bindfs' package is available..."
+which bindfs
+ERROR_CODE=$?
+
+if [ $ERROR_CODE = 0 ]; then
+  echo "'bindfs' package found!"
+  exit $ERROR_CODE
+fi
+
+# If not try to install it.
+echo "Package 'bindfs' not found. Trying installation..."
+apt-get update
+apt-get install -y bindfs
+ERROR_CODE=$?
+
+if [ $ERROR_CODE != 0 ]; then
+  echo "Package 'bindfs' could not be installed"
+  exit $ERROR_CODE
+fi
+
+# Tesf if package is already installed
+which bindfs
+ERROR_CODE=$?
+
+if [ $ERROR_CODE = 0 ]; then
+  echo "'bindfs' package installed!"
+  exit $ERROR_CODE
+fi
+
+# If all fails, prevent installation.
+echo "'bindfs' not found."
+exit 1

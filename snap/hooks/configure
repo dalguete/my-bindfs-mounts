@@ -1,0 +1,11 @@
+#!/bin/sh
+
+############################
+## Add Configuration File ##
+############################
+CONFIG_FILE="/etc/default/my-bindfs-mounts"
+
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "Config file installed!"
+  cp "$SNAP$CONFIG_FILE" $CONFIG_FILE
+fi

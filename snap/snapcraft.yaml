@@ -1,4 +1,4 @@
-name: my-bindfs-mount
+name: my-bindfs-mounts
 version: '0.1'
 summary: bindfs mounts helper, with persistence layer
 description: |
@@ -7,13 +7,18 @@ description: |
   support file.
 
 grade: stable
-confinement: strict
+# Classic confinement was used to allow internal commands to run mounts on host system.
+# Originally a couple of interfaces were tested, with no positive results.
+confinement: classic
 
 apps:
-  my-bindfs-mount:
-    command: my-bindfs-mount
+  my-bindfs-mounts:
+    command: usr/bin/my-bindfs-mounts
+    # plugs:
+    #   - fuse-support
+    #   - mount-observe
 
 parts:
-  my-bindfs-mount:
+  my-bindfs-mounts:
     plugin: dump
     source: .
