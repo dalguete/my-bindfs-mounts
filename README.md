@@ -1,5 +1,10 @@
-my-mounts-bindfs
-================
+# my-bindfs-mounts
+
+### TL;DR;
+
+bindfs mounts helper, with persistence layer
+
+### Description
 
 Here resides a kind of framework that let us instantiate mounts in the way `bindfs`
 command does, plus a persistence section, so a list of mounts can be stored in a
@@ -15,19 +20,25 @@ will all possible options.
 line represents a bunch of args to pass to `bindfs` command, so you can manually
 change things here; just, be careful to not insert invalid options.
 
-* `/etc/init.d/my-bindfs-mounts`: Service file used to automatically do the mounts
-on system startup, based on whatever has been set in the persistence file.
-
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths.
 You will have to ensure both of them exists previously.
 
-Ubuntu PPA
-==========
+Snap Package
+============
 
-You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
+The project distribution is aimed to be build as a ***snap*** package (more info here https://docs.snapcraft.io/snaps/intro).
+Original intention was to distribute it as a .deb package, but Canonical's new format
+proved to be more easy, flexible and robust (so far!).
 
-Sidenote: About My Experience Creating Deb Packages Plus Ubuntu's PPA
----------------------------------------------------------------------
+Ubuntu PPA (legacy)
+===================
 
-http://dalguete.github.io/#about-my-experiences-creating-deb-packages-plus-ubuntus-ppa
+This was the original description on where and how .deb package for this project was created.
+Methos No longer Used, but leaving this note here just historic reasons.
 
+> You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
+> 
+> Sidenote: About My Experience Creating Deb Packages Plus Ubuntu's PPA
+> ---------------------------------------------------------------------
+> 
+> http://dalguete.github.io/#about-my-experiences-creating-deb-packages-plus-ubuntus-ppa
