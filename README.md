@@ -11,7 +11,7 @@ Here resides a kind of framework that lets us instantiate mounts in the way `bin
 It's really simple, aimed to enable program distribution under different formats. 
 
 - ***src***: contains all the real code on the solution.
-- ***debian***: configurations to create a .deb package on the project.
+- ***autotools***: configurations to create the autotools distribution version of the package.
 - ***snap***: configurations to create a snap package on the project.
 
 ## Source Code Explanation
@@ -24,14 +24,17 @@ Next an explanation of each file here defined:
 
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths. You will have to ensure both of them exists previously.
 
-# Ubuntu PPA
-
-Check **debian** folder with all configuration information ready to build a deb package. You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
-
-## Sidenote: *About My Experience Creating .deb Packages Plus Ubuntu's PPA*
- 
- http://dalguete.github.io/#about-my-experiences-creating-deb-packages-plus-ubuntus-ppa
-
 # Snap Package
 
 Check **snap** folder with all configuration information ready to build a snap package. More info about snaps here https://docs.snapcraft.io/snaps/intro.
+
+# Ubuntu PPA (legacy)
+
+***THIS HAS BEEN DEPRECATED, NO LONGER CREATING .deb PACKAGES.***
+***<br/>Left this here for future reference.***
+
+> Check **debian** folder with all configuration information ready to build a deb package. You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
+> 
+> ## Sidenote: *About My Experience Creating .deb Packages Plus Ubuntu's PPA*
+> 
+> http://dalguete.github.io/#about-my-experiences-creating-deb-packages-plus-ubuntus-ppa

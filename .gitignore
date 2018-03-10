@@ -5,6 +5,3 @@ prime/
 stage/
 *.snap
 *.bz2
-
-### BZR ###
-.bzr/
