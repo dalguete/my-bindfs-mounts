@@ -23,4 +23,4 @@ apps:
 parts:
   my-bindfs-mounts:
     plugin: dump
-    source: .
+    source: src/
