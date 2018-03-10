@@ -1,0 +1,14 @@
+Source: my-bindfs-mounts
+Section: utils
+Priority: optional
+Maintainer: Daniel Dalgo <dalguete@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: http://dalguete.com
+Vcs-Browser: https://github.com/dalguete/my-bindfs-mounts.git
+
+Package: my-bindfs-mounts
+Architecture: any
+Depends: bash, bindfs
+Description: Small framework used to handle bindfs mounts.
+ Small framework used to handle bindfs mounts, with the plus of making them persistent.
