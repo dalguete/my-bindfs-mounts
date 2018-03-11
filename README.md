@@ -24,6 +24,10 @@ Next an explanation of each file here defined:
 
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths. You will have to ensure both of them exists previously.
 
+# Autotools Package
+
+Check **autotools** folder with all configuration information ready to build an autotools package. More info about snaps here 
+
 # Snap Package
 
 Check **snap** folder with all configuration information ready to build a snap package. More info about snaps here https://docs.snapcraft.io/snaps/intro.
