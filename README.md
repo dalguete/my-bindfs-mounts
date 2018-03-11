@@ -11,7 +11,6 @@ Here resides a kind of framework that lets us instantiate mounts in the way `bin
 It's really simple, aimed to enable program distribution under different formats. 
 
 - ***src***: contains all the real code on the solution.
-- ***autotools***: configurations to create the autotools distribution version of the package.
 - ***snap***: configurations to create a snap package on the project.
 
 ## Source Code Explanation
@@ -24,13 +23,14 @@ Next an explanation of each file here defined:
 
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths. You will have to ensure both of them exists previously.
 
-# Autotools Package
-
-Check **autotools** folder with all configuration information ready to build an autotools package. More info about snaps here 
-
 # Snap Package
 
 Check **snap** folder with all configuration information ready to build a snap package. More info about snaps here https://docs.snapcraft.io/snaps/intro.
+
+Commands to trigger package creation can be run from this project's root level.
+
+## TODO:
+- Check how to create a cleaner snap package. So far, when run `snapcraft cleanbuild` command, everything goes great, but there's a .bz2 file inside the created snap that has everything this repo has, even **.git** folder, and that's how that's published. No Bueno!
 
 # Ubuntu PPA (legacy)
 
