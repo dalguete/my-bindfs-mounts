@@ -1,39 +1,71 @@
 #!/bin/sh
 
-################################
-## 'bindfs' package checkings ##
-################################
+#!/bin/sh
 
-# Check bindfs package is installed in host.
+########################
+## 'Package checkings ##
+########################
+
+TO_INSTALL=
+
+# Check 'bash' package is installed in host.
+echo "Checking 'bash' package is available..."
+which bash
+ERROR_CODE=$?
+
+if [ $ERROR_CODE != 0 ]; then
+  TO_INSTALL="$TO_INSTALL bash"
+fi
+
+# Check 'bindfs' package is installed in host.
 echo "Checking 'bindfs' package is available..."
 which bindfs
 ERROR_CODE=$?
 
-if [ $ERROR_CODE = 0 ]; then
-  echo "'bindfs' package found!"
-  exit $ERROR_CODE
+if [ $ERROR_CODE != 0 ]; then
+  TO_INSTALL="$TO_INSTALL bindfs"
 fi
 
-# If not try to install it.
-echo "Package 'bindfs' not found. Trying installation..."
+############################
+## 'Package installations ##
+############################
+
+if [ -z "$TO_INSTALL" ]; then
+  echo "Ol Korrect :P"
+  exit
+fi
+
+# Updating packages.
+echo "Installing missing packages..."
 apt-get update
-apt-get install -y bindfs
+apt-get install -y "$TO_INSTALL"
 ERROR_CODE=$?
 
 if [ $ERROR_CODE != 0 ]; then
-  echo "Package 'bindfs' could not be installed"
+  echo "Error in installation!" >&2
   exit $ERROR_CODE
 fi
 
-# Tesf if package is already installed
+###########################
+## 'Package re-checkings ##
+###########################
+
+# Check 'bash' package is installed in host.
+echo "Checking 'bash' package is available..."
+which bash
+ERROR_CODE=$?
+
+if [ $ERROR_CODE != 0 ]; then
+  echo "Package 'bash' still not available!" >&2
+  exit $ERROR_CODE
+fi
+
+# Check 'bindfs' package is installed in host.
+echo "Checking 'bindfs' package is available..."
 which bindfs
 ERROR_CODE=$?
 
-if [ $ERROR_CODE = 0 ]; then
-  echo "'bindfs' package installed!"
+if [ $ERROR_CODE != 0 ]; then
+  echo "Package 'bindfs' still not available!" >&2
   exit $ERROR_CODE
 fi
-
-# If all fails, prevent installation.
-echo "'bindfs' not found."
-exit 1

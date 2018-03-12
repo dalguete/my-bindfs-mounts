@@ -37,7 +37,7 @@ Commands to trigger package creation can be run from this project's root level.
 ***THIS HAS BEEN DEPRECATED, NO LONGER CREATING .deb PACKAGES.***
 ***<br/>Left this here for future reference.***
 
-> Check **debian** folder with all configuration information ready to build a deb package. You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
+> You can find the package as a PPA here https://launchpad.net/~dalguete/+archive/ubuntu/my-bindfs-mounts
 > 
 > ## Sidenote: *About My Experience Creating .deb Packages Plus Ubuntu's PPA*
 > 
