@@ -12,6 +12,7 @@ It's really simple, aimed to enable program distribution under different formats
 
 - ***src***: contains all the real code on the solution.
 - ***snap***: configurations to create a snap package on the project.
+- ***Makefile***: configurations to install the package but using the ubiquitous make tool.
 
 ## Source Code Explanation
 
@@ -22,6 +23,18 @@ Next an explanation of each file here defined:
 * `src/etc/default/my-bindfs-mounts`: Persistence file with all mounts to handle. Each line represents a bunch of args to pass to `bindfs` command, so you can manually change things here; just, be careful to not insert invalid options.
 
 **IMPORTANT:** this process does **NOT** create *ORIGIN* and *DESTINATION* paths. You will have to ensure both of them exists previously.
+
+# Makefile
+
+Clone the project and, inside of it, run:
+
+```
+sudo make install
+```
+
+Done! For upgrades, simply clone the project again and run the previous command again.
+
+To remove simply run `sudo make uninstall`.
 
 # Snap Package
 
